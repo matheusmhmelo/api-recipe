@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  recipe:
+    image: matheusmhmelo/api-recipe:latest
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        order: start-first
+    networks:
+      main:
+        aliases:
+          - recipe
+networks:
+  main:
+    external: true
