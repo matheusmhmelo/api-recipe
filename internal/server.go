@@ -21,4 +21,6 @@ func NewServer() *Server {
 
 func (s *Server) serve() {
 	s.Router.Path("/heartbeat").HandlerFunc(handler.Heartbeat).Methods(http.MethodGet)
+
+	s.Router.Path("/recipes/").HandlerFunc(handler.Recipes).Methods(http.MethodGet)
 }

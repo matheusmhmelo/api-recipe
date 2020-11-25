@@ -1,3 +1,3 @@
 package handler
 
-const spanName = "handler"
+const invalidParameters = "Invalid ingredients parameters"
