@@ -17,7 +17,12 @@ func Recipes(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	results, err := recipes.GetRecipes(ingredients)
+	page := r.URL.Query().Get("page")
+	if page == "" {
+		page = "1"
+	}
+
+	results, err := recipes.GetRecipes(ingredients, page)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		_, _ = w.Write([]byte(fmt.Sprintf(`{ "error": "%s" }`, err.Error())))
