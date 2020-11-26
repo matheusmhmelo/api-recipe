@@ -1,8 +1,8 @@
 package recipes
 
 import (
-	"fmt"
 	"github.com/matheusmhmelo/api-recipe/internal/domain"
+	"log"
 	"strings"
 )
 
@@ -11,12 +11,13 @@ func GetRecipes(ingredients, page string) (domain.RecipesResponse, error) {
 
 	i, err := format(ingredients)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return recipes, err
 	}
 
 	foundRecipes, err := searchRecipes(ingredients, page)
 	if err != nil {
+		log.Println(err)
 		return recipes, err
 	}
 

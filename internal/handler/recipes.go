@@ -2,8 +2,9 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
+	"errors"
 	"github.com/matheusmhmelo/api-recipe/internal/services/recipes"
+	"github.com/matheusmhmelo/api-recipe/internal/utils"
 	"net/http"
 )
 
@@ -12,9 +13,8 @@ func Recipes(w http.ResponseWriter, r *http.Request) {
 	ingredients := r.URL.Query().Get("i")
 
 	if ingredients == "" {
-		w.WriteHeader(http.StatusBadRequest)
-		_, _ = w.Write([]byte(fmt.Sprintf(`{ "error": "%s" }`, invalidParameters)))
-		return
+		err := errors.New("invalid ingredients parameters")
+		utils.CreateBadRequestResponse(w, err)
 	}
 
 	page := r.URL.Query().Get("page")
@@ -24,9 +24,7 @@ func Recipes(w http.ResponseWriter, r *http.Request) {
 
 	results, err := recipes.GetRecipes(ingredients, page)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		_, _ = w.Write([]byte(fmt.Sprintf(`{ "error": "%s" }`, err.Error())))
-		return
+		utils.CreateBadRequestResponse(w, err)
 	}
 
 	ret, _ := json.Marshal(results)
