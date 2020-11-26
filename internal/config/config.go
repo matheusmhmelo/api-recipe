@@ -4,35 +4,13 @@ type Configuration struct {
 	Server struct {
 		Port string `yaml:"port"`
 	} `yaml:"server"`
-	Mysql Mysql `yaml:"mysql"`
-}
-
-type Mysql struct {
-	Host string `yaml:"host"`
-	Port string `yaml:"port"`
-	User string `yaml:"user"`
-	Password string `yaml:"password"`
-	Database string `yaml:"database"`
-}
-
-func (m Mysql) GetUser() string {
-	return m.User
-}
-
-func (m Mysql) GetPassword() string {
-	return m.Password
-}
-
-func (m Mysql) GetHost() string {
-	return m.Host
-}
-
-func (m Mysql) GetPort() string {
-	return m.Port
-}
-
-func (m Mysql) GetDatabase() string {
-	return m.Database
+	RecipePuppy struct {
+		Url string `yaml:"url"`
+	} `yaml:"recipe_puppy"`
+	Giphy struct {
+		Url string `yaml:"url"`
+		ApiKey string `yaml:"api_key"`
+	} `yaml:"giphy"`
 }
 
 var Config Configuration

@@ -4,15 +4,14 @@ import (
 	"errors"
 	"log"
 	"regexp"
+	"sort"
 	"strings"
 )
-
-const ingredientLimitError = "ingredient limit reached, choose only 3"
 
 func format(ingredients string) ([]string, error) {
 	i := strings.Split(ingredients, ",")
 	if len(i) > 3 {
-		err := errors.New(ingredientLimitError)
+		err := errors.New("ingredient limit reached, choose only 3")
 		return nil, err
 	}
 
@@ -28,4 +27,12 @@ func format(ingredients string) ([]string, error) {
 	}
 
 	return i, nil
+}
+
+func formatIngredients(ingredients string) []string {
+	var i []string
+	i = strings.Split(ingredients, ", ")
+	sort.Strings(i)
+
+	return i
 }
