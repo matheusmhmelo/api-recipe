@@ -14,6 +14,19 @@ services:
       main:
         aliases:
           - recipe
+  recipe_redis:
+    image: redis
+    ports:
+      - 6379:6379
+    deploy:
+      mode: replicated
+      replicas: 1
+      update_config:
+        delay: 15s
+    networks:
+      main:
+        aliases:
+          - recipe_redis
 networks:
   main:
     external: true

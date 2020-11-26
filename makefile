@@ -3,3 +3,6 @@ build:
 
 start:
 	docker stack deploy -c docker-compose.yaml dm
+
+stop:
+	docker service rm dm_recipe dm_recipe_redis

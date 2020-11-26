@@ -1,7 +1,9 @@
 package recipes
 
 import (
+	"github.com/matheusmhmelo/api-recipe/internal/config"
 	"github.com/matheusmhmelo/api-recipe/internal/domain"
+	"github.com/matheusmhmelo/api-recipe/internal/utils"
 	"log"
 	"strings"
 )
@@ -50,6 +52,12 @@ func handleRecipes(recipesApi []interface{}) ([]domain.Recipe, error) {
 	var recipes []domain.Recipe
 	replacer := strings.NewReplacer("\n", "", "\r", "", "\t", "")
 
+	cache, err := utils.NewRedis(config.Config.Redis)
+	if err != nil {
+		log.Println(err)
+	}
+	defer cache.Close()
+
 	for _, recipe := range recipesApi {
 		mapRecipe := recipe.(map[string]interface{})
 		title := replacer.Replace(mapRecipe["title"].(string))
@@ -60,7 +68,7 @@ func handleRecipes(recipesApi []interface{}) ([]domain.Recipe, error) {
 			Ingredients: formatIngredients(mapRecipe["ingredients"].(string)),
 		}
 
-		gif, err := findGif(title)
+		gif, err := findGif(title, cache)
 		if err != nil {
 			return nil, err
 		}

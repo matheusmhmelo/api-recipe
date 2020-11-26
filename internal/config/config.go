@@ -11,6 +11,7 @@ type Configuration struct {
 		Url string `yaml:"url"`
 		ApiKey string `yaml:"api_key"`
 	} `yaml:"giphy"`
+	Redis RedisConfig `yaml:"redis"`
 }
 
 var Config Configuration
