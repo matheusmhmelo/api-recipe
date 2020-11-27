@@ -14,13 +14,13 @@ import (
 func GetRecipes(ingredients, page string) (domain.RecipesResponse, error) {
 	recipes := domain.RecipesResponse{}
 
-	i, err := format.Format(ingredients)
+	i, formattedIngredients, err := format.Format(ingredients)
 	if err != nil {
 		log.Println(err)
 		return recipes, err
 	}
 
-	foundRecipes, err := searchRecipes(ingredients, page)
+	foundRecipes, err := searchRecipes(formattedIngredients, page)
 	if err != nil {
 		log.Println(err)
 		return recipes, err
@@ -71,7 +71,7 @@ func handleRecipes(recipesApi []interface{}) ([]domain.Recipe, error) {
 		modelRecipe := domain.Recipe{
 			Title:       title,
 			Link:        mapRecipe["href"].(string),
-			Ingredients: format.FormatIngredients(mapRecipe["ingredients"].(string)),
+			Ingredients: format.Ingredients(mapRecipe["ingredients"].(string)),
 		}
 
 		giphy := giphyService.New()

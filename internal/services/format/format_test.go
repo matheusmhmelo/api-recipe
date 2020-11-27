@@ -12,31 +12,36 @@ func TestFormat_Format(t *testing.T) {
 		name string
 		s    string
 		want []string
+		ingredients string
 		err  error
 	}{
 		{
 			"[format] Normal ingredients",
 			"onions,garlic",
 			[]string{"onions","garlic"},
+			"onions,garlic",
 			nil,
 		},
 		{
 			"[format] Special characters ingredients",
 			"onions_,^garlic=",
 			[]string{"onions","garlic"},
+			"onions,garlic",
 			nil,
 		},
 		{
 			"[format] Limit of ingredients reached",
 			"onions,garlic,pepper,salsa",
 			[]string(nil),
+			"",
 			errors.New("ingredient limit reached, choose only 3"),
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := Format(tt.s)
+			got, ingredients, err := Format(tt.s)
 			assert.Equal(t, got, tt.want)
+			assert.Equal(t, ingredients, tt.ingredients)
 
 			if tt.err != nil {
 				if err == nil {
@@ -69,7 +74,7 @@ func TestFormat_FormatIngredients(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := FormatIngredients(tt.s)
+			got := Ingredients(tt.s)
 			assert.Equal(t, got, tt.want)
 		})
 	}
