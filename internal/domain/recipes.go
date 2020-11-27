@@ -9,5 +9,5 @@ type Recipe struct {
 
 type RecipesResponse struct {
 	Keywords []string `json:"keywords"`
-	Recipes  []Recipe
+	Recipes  []Recipe `json:"recipes"`
 }
