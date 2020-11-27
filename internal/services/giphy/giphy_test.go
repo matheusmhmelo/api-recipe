@@ -56,10 +56,10 @@ func TestFind_Find(t *testing.T) {
 	f := Find{request: &RequestMock{}}
 
 	tests := []struct {
-		name string
+		name  string
 		title string
-		want string
-		err  error
+		want  string
+		err   error
 	}{
 		{
 			"[find] Gif Found",

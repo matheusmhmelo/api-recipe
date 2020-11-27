@@ -9,23 +9,23 @@ import (
 
 func TestFormat_Format(t *testing.T) {
 	tests := []struct {
-		name string
-		s    string
-		want []string
+		name        string
+		s           string
+		want        []string
 		ingredients string
-		err  error
+		err         error
 	}{
 		{
 			"[format] Normal ingredients",
 			"onions,garlic",
-			[]string{"onions","garlic"},
+			[]string{"onions", "garlic"},
 			"onions,garlic",
 			nil,
 		},
 		{
 			"[format] Special characters ingredients",
 			"onions_,^garlic=",
-			[]string{"onions","garlic"},
+			[]string{"onions", "garlic"},
 			"onions,garlic",
 			nil,
 		},
@@ -54,7 +54,6 @@ func TestFormat_Format(t *testing.T) {
 	}
 }
 
-
 func TestFormat_FormatIngredients(t *testing.T) {
 	tests := []struct {
 		name string
@@ -64,7 +63,7 @@ func TestFormat_FormatIngredients(t *testing.T) {
 		{
 			"[formatIngredients] Ingredients from API",
 			"onions, garlic, pepper, salsa",
-			[]string{"garlic","onions","pepper","salsa"},
+			[]string{"garlic", "onions", "pepper", "salsa"},
 		},
 		{
 			"[formatIngredients] Ingredients without format of API",

@@ -19,24 +19,24 @@ func (r *RequestMock) Do(endpoint string) (map[string]interface{}, error) {
 	var mockedResponse map[string]interface{}
 	var mockedError error
 	switch endpoint {
-		case endpoint1:
-			mockedResponse = map[string]interface{}{
-				"results": []interface{}{
-					map[string]string{
-						"title":       "Recipe 1",
-						"ingredients": "onions,garlic",
-					},
+	case endpoint1:
+		mockedResponse = map[string]interface{}{
+			"results": []interface{}{
+				map[string]string{
+					"title":       "Recipe 1",
+					"ingredients": "onions,garlic",
 				},
-			}
-			mockedError = nil
-		case endpoint2:
-			mockedResponse = map[string]interface{}{
-				"error": "something went wrong",
-			}
-			mockedError = errors.New("something wrong with the response of RecipePuppy API")
-		case endpoint3:
-			mockedResponse = nil
-			mockedError = errors.New("something wrong with the response of RecipePuppy API")
+			},
+		}
+		mockedError = nil
+	case endpoint2:
+		mockedResponse = map[string]interface{}{
+			"error": "something went wrong",
+		}
+		mockedError = errors.New("something wrong with the response of RecipePuppy API")
+	case endpoint3:
+		mockedResponse = nil
+		mockedError = errors.New("something wrong with the response of RecipePuppy API")
 	}
 	return mockedResponse, mockedError
 }
@@ -45,10 +45,10 @@ func TestSearch_Search(t *testing.T) {
 	s := Search{request: &RequestMock{}}
 
 	tests := []struct {
-		name string
-		ingredients    string
-		want []interface{}
-		err  error
+		name        string
+		ingredients string
+		want        []interface{}
+		err         error
 	}{
 		{
 			"[search] Recipe Found",
