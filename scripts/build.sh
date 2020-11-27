@@ -5,7 +5,6 @@ docker run -it --rm -v "$(pwd)":/go -e GOPATH= golang:1.14 sh -c "CGO_ENABLED=0 
 
 rm ./docker/recipe
 mv ./recipe ./docker/
-cp ./docker-config.yaml ./docker/config.yaml
 
 docker build -t matheusmhmelo/recipe:"$1" docker/
 

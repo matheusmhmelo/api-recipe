@@ -5,6 +5,8 @@ services:
     image: matheusmhmelo/api-recipe:latest
     ports:
       - 8082:8080
+    volumes:
+      - ./docker-config.yaml:/config.yaml
     deploy:
       replicas: 1
       update_config:
