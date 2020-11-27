@@ -8,7 +8,7 @@ type Configuration struct {
 		Url string `yaml:"url"`
 	} `yaml:"recipe_puppy"`
 	Giphy struct {
-		Url string `yaml:"url"`
+		Url    string `yaml:"url"`
 		ApiKey string `yaml:"api_key"`
 	} `yaml:"giphy"`
 	Redis RedisConfig `yaml:"redis"`
