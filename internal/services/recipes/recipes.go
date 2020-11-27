@@ -3,7 +3,10 @@ package recipes
 import (
 	"github.com/matheusmhmelo/api-recipe/internal/config"
 	"github.com/matheusmhmelo/api-recipe/internal/domain"
-	"github.com/matheusmhmelo/api-recipe/internal/utils"
+	"github.com/matheusmhmelo/api-recipe/internal/infrastructure/cache"
+	"github.com/matheusmhmelo/api-recipe/internal/services/format"
+	giphyService "github.com/matheusmhmelo/api-recipe/internal/services/giphy"
+	"github.com/matheusmhmelo/api-recipe/internal/services/recipepuppy"
 	"log"
 	"strings"
 )
@@ -11,7 +14,7 @@ import (
 func GetRecipes(ingredients, page string) (domain.RecipesResponse, error) {
 	recipes := domain.RecipesResponse{}
 
-	i, err := format(ingredients)
+	i, err := format.Format(ingredients)
 	if err != nil {
 		log.Println(err)
 		return recipes, err
@@ -32,7 +35,8 @@ func GetRecipes(ingredients, page string) (domain.RecipesResponse, error) {
 func searchRecipes(ingredients string, page string) ([]domain.Recipe, error) {
 	var recipes []domain.Recipe
 
-	results, err := search(ingredients, page)
+	rpuppy := recipepuppy.New()
+	results, err := rpuppy.Search(ingredients, page)
 	if err != nil {
 		return recipes, err
 	}
@@ -52,23 +56,26 @@ func handleRecipes(recipesApi []interface{}) ([]domain.Recipe, error) {
 	var recipes []domain.Recipe
 	replacer := strings.NewReplacer("\n", "", "\r", "", "\t", "")
 
-	cache, err := utils.NewRedis(config.Config.Redis)
+	_cache, err := cache.NewRedis(config.Config.Redis)
 	if err != nil {
 		log.Println(err)
 	}
-	defer cache.Close()
+	if _cache != nil {
+		defer _cache.Close()
+	}
 
 	for _, recipe := range recipesApi {
 		mapRecipe := recipe.(map[string]interface{})
 		title := replacer.Replace(mapRecipe["title"].(string))
 
 		modelRecipe := domain.Recipe{
-			Title: title,
-			Link: mapRecipe["href"].(string),
-			Ingredients: formatIngredients(mapRecipe["ingredients"].(string)),
+			Title:       title,
+			Link:        mapRecipe["href"].(string),
+			Ingredients: format.FormatIngredients(mapRecipe["ingredients"].(string)),
 		}
 
-		gif, err := findGif(title, cache)
+		giphy := giphyService.New()
+		gif, err := giphy.Find(title, _cache)
 		if err != nil {
 			return nil, err
 		}

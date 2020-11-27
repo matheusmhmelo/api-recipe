@@ -1,4 +1,4 @@
-package recipes
+package format
 
 import (
 	"errors"
@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func format(ingredients string) ([]string, error) {
+func Format(ingredients string) ([]string, error) {
 	i := strings.Split(ingredients, ",")
 	if len(i) > 3 {
 		err := errors.New("ingredient limit reached, choose only 3")
@@ -29,7 +29,7 @@ func format(ingredients string) ([]string, error) {
 	return i, nil
 }
 
-func formatIngredients(ingredients string) []string {
+func FormatIngredients(ingredients string) []string {
 	var i []string
 	i = strings.Split(ingredients, ", ")
 	sort.Strings(i)

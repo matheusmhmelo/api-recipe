@@ -1,4 +1,4 @@
-package utils
+package request
 
 import (
 	"encoding/json"
@@ -7,7 +7,17 @@ import (
 	"net/http"
 )
 
-func Request(endpoint string) (map[string]interface{}, error) {
+type Request interface {
+	Do(string) (map[string]interface{}, error)
+}
+
+type ImplementRequest struct{}
+
+func New() *ImplementRequest {
+	return &ImplementRequest{}
+}
+
+func (i *ImplementRequest) Do(endpoint string) (map[string]interface{}, error) {
 	resp, err := http.Get(endpoint)
 	if err != nil {
 		return nil, err

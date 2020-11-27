@@ -1,4 +1,4 @@
-package recipes
+package format
 
 import (
 	"errors"
@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func Test_format(t *testing.T) {
+func TestFormat_Format(t *testing.T) {
 	tests := []struct {
 		name string
 		s    string
@@ -35,7 +35,7 @@ func Test_format(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := format(tt.s)
+			got, err := Format(tt.s)
 			assert.Equal(t, got, tt.want)
 
 			if tt.err != nil {
@@ -50,7 +50,7 @@ func Test_format(t *testing.T) {
 }
 
 
-func Test_formatIngredients(t *testing.T) {
+func TestFormat_FormatIngredients(t *testing.T) {
 	tests := []struct {
 		name string
 		s    string
@@ -69,7 +69,7 @@ func Test_formatIngredients(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := formatIngredients(tt.s)
+			got := FormatIngredients(tt.s)
 			assert.Equal(t, got, tt.want)
 		})
 	}
