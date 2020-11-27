@@ -39,6 +39,9 @@ Rota responsável pela busca da receita: \
  }
 ```
 
+A rota também aceita o parâmetro `page` para realizar uma paginação dos resultados. \
+Exemplo: `127.0.0.1:8082/recipes/?i=onions,garlic&page=3`.
+
 ## Configurações
 As configurações necessárias para a execução da API são:
  - Porta de execução (padrão: 8080)
