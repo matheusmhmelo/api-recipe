@@ -7,9 +7,10 @@ um há um GIF, vindo da API do [Giphy](https://developers.giphy.com/docs/).
 Para executar a API siga os seguintes passos:
 1) Clone o repositório na sua máquina `git clone git@github.com:matheusmhmelo/api-recipe.git`
 2) Acesse a pasta raiz do projeto
-3) Execute o comando `make start` para inicializar todos os serviços necessários 
-4) Já é possível acessar as rotas da API a partir do endereço `127.0.0.1:8082`
-5) Para finalizar a execução execute o comando `make stop`
+3) Execute o comando `make start` para inicializar todos os serviços necessários
+4) Execute o comando `make build tag=latest` para inicializar a API (`tag` pode ser qualquer valor, por padrão podemos usar `latest`) 
+5) Já é possível acessar as rotas da API a partir do endereço `127.0.0.1:8082`
+6) Para finalizar a execução execute o comando `make stop`
 
 ## Rotas
 
@@ -69,7 +70,7 @@ Para facilitar a execução algumas ações estão disponíveis em Scripts:
 - `make stop`: Finaliza os serviços do Docker
 - `make build tag={tag}`: Atualiza a imagem da API salva no Docker de acordo com a `tag`informada
 
-O último comando deve ser executado apenas quando houver alterações no código e tais alterações 
+O último comando deve ser executado quando houver alterações no código e tais alterações 
 devam ser aplicadas na imagem do docker.
 
 ### Testes Unitários
